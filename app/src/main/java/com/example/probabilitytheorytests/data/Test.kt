@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class Test(
     val testName: String,
     val questions: List<Question>
-) : Parcelable
+):Parcelable

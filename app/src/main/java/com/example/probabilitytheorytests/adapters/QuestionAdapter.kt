@@ -26,7 +26,30 @@ class QuestionAdapter : ListAdapter<Question, QuestionAdapter.QuestionViewHolder
             binding.questionTextView.text = question.question
             binding.option1RadioButton.text = question.options[0]
             binding.option2RadioButton.text = question.options[1]
+            binding.option3RadioButton.text = question.options[2]
+            binding.option4RadioButton.text = question.options[3]
             // если добавляли больше вариантов ответа, привяжите их текст здесь
+
+            // Очищаем предыдущий выбор перед установкой нового слушателя, чтобы избежать повторных вызовов
+            binding.optionsRadioGroup.setOnCheckedChangeListener(null)
+            binding.optionsRadioGroup.clearCheck()
+
+            // Устанавливаем выбранный пользователем ответ, если он есть
+            if (question.userAnswerIndex != null) {
+                binding.optionsRadioGroup.check(binding.optionsRadioGroup.getChildAt(question.userAnswerIndex!!).id)
+            }
+
+            // Обработка выбора ответа пользователя
+            binding.optionsRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+                val selectedOptionIndex = when (checkedId) {
+                    binding.option1RadioButton.id -> 0
+                    binding.option2RadioButton.id -> 1
+                    binding.option3RadioButton.id -> 2
+                    binding.option4RadioButton.id -> 3
+                    else -> null
+                }
+                question.userAnswerIndex = selectedOptionIndex
+            }
         }
     }
 

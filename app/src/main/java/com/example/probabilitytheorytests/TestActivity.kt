@@ -21,8 +21,6 @@ class TestActivity : AppCompatActivity() {
         initRecyclerView()
 
         fun saveTestResult(testResult: TestResult) {
-            // Здесь вы можете сохранить результат теста, например, в SharedPreferences, файле или базе данных
-            // Пример сохранения в SharedPreferences:
             val sharedPreferences = getSharedPreferences("test_results", MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putInt(testResult.testName, testResult.correctAnswers)
@@ -37,24 +35,32 @@ class TestActivity : AppCompatActivity() {
             finish()
         }
 
+        val testName = intent.getStringExtra("testName") ?: ""
+        val test = Repository.getTests().find { it.testName == testName }
 
+        if (test != null) {
+            questionAdapter.submitList(test.questions)
+        } else {
+            Toast.makeText(this, "Тест не найден", Toast.LENGTH_LONG).show()// Обработать ситуацию, когда тест не найден, например, показать сообщение об ошибке или вернуться к предыдущей активности
+        }
     }
 
     private fun initRecyclerView() {
         binding.questionsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.questionsRecyclerView.adapter = questionAdapter
-
-        val questions = listOf(
-            Question("Вопрос 1", listOf("Вариант ответа 1", "Вариант ответа 2"), correctAnswerIndex = 0),
-            Question("Вопрос 2", listOf("Вариант ответа 1", "Вариант ответа 2"), correctAnswerIndex = 0),
-            Question("Вопрос 3", listOf("Вариант ответа 1", "Вариант ответа 2"), correctAnswerIndex = 0),
-            Question("Вопрос 4", listOf("Вариант ответа 1", "Вариант ответа 2"), correctAnswerIndex = 0),
-        )
-
-        questionAdapter.submitList(questions)
     }
+
     private fun calculateResult(): TestResult {
+        val testName = intent.getStringExtra("testName") ?: ""
         val correctAnswers = questionAdapter.currentList.count { it.isAnswerCorrect }
-        return TestResult("Название теста", correctAnswers, questionAdapter.itemCount)
+        return TestResult(testName, correctAnswers, questionAdapter.itemCount)
+    }
+
+    fun saveTestResult(testResult: TestResult) {
+        val sharedPreferences = getSharedPreferences("test_results", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val uniqueKey = "${testResult.testName}_${System.currentTimeMillis()}"
+        editor.putInt(uniqueKey, testResult.correctAnswers)
+        editor.apply()
     }
 }

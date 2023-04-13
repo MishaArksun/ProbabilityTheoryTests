@@ -22,13 +22,9 @@ class TestAdapter(private val onTestClickListener: (Test) -> Unit) :
         holder.binding.testQuestionsCountTextView.text = "Вопросов: ${test.questions.size}"
         holder.itemView.setOnClickListener { onTestClickListener(test) }
     }
+
     class TestViewHolder(val binding: TestItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(test: Test) {
-            binding.testTitleTextView.text = test.testName
-            binding.testQuestionsCountTextView.text = "Количество вопросов: ${test.questions.size}"
-        }
     }
 
     class TestDiffCallback : DiffUtil.ItemCallback<Test>() {
