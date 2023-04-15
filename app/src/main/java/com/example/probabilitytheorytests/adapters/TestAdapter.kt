@@ -24,8 +24,7 @@ class TestAdapter(private val onTestClickListener: (Test) -> Unit) :
     }
 
     class TestViewHolder(val binding: TestItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     class TestDiffCallback : DiffUtil.ItemCallback<Test>() {
         override fun areItemsTheSame(oldItem: Test, newItem: Test): Boolean {

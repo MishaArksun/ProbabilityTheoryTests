@@ -13,12 +13,3 @@ data class Question(
     val isAnswerCorrect: Boolean
         get() = userAnswerIndex == correctAnswerIndex
 }
-
-/*
-* @Parcelize
-data class Question(
-    val questionText: String,
-    val answerOptions: List<String>,
-    val correctAnswerIndex: Int
-) : Parcelable
-* */

@@ -1,11 +1,9 @@
 package com.example.probabilitytheorytests.data
-
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+
 @Parcelize
-data class Test(
+data class Category(
     val id: Int,
-    val testName: String,
-    val categoryId: Int,
-    val questions: List<Question>
-): Parcelable
+    val name: String
+) : Parcelable
