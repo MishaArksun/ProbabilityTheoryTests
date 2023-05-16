@@ -1,7 +1,10 @@
 package com.example.probabilitytheorytests
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.probabilitytheorytests.adapters.CategoryProgressAdapter
 import com.example.probabilitytheorytests.data.CategoryProgress
@@ -17,10 +20,16 @@ class ProgressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProgressBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.recommendedTestButton.setOnClickListener {
+            val recommendedTest = Repository.getRecommendedTest(this)
+            val intent = Intent(this, TestActivity::class.java)
+            intent.putExtra("testId", recommendedTest.id)
+            startActivity(intent)
+        }
         binding.backToMainButton.setOnClickListener {
             finish()
         }
+
 
         initCategories()
     }
@@ -49,7 +58,6 @@ class ProgressActivity : AppCompatActivity() {
             correctAnswers += result.correctAnswers
             totalQuestions += result.totalQuestions
         }
-
         return Pair(correctAnswers, totalQuestions)
     }
 }

@@ -38,7 +38,7 @@ class TestActivity : AppCompatActivity() {
         }
 
         testId = intent.getIntExtra("testId", -1)
-        test = Repository.getTests().find { it.id == testId }
+        test = Repository.getTests(this).find { it.id == testId }
 
         if (test != null) {
             questionAdapter.submitList(test!!.questions)
@@ -46,18 +46,15 @@ class TestActivity : AppCompatActivity() {
             Toast.makeText(this, "Тест не найден", Toast.LENGTH_LONG).show()
         }
     }
-
     private fun initRecyclerView() {
         binding.questionsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.questionsRecyclerView.adapter = questionAdapter
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateResult(): UserTestResult {
         val correctAnswers = questionAdapter.currentList.count { it.isAnswerCorrect }
         return UserTestResult(testId, test?.testName ?: "", LocalDateTime.now(), correctAnswers, questionAdapter.itemCount)
     }
-
     private fun saveTestResult(testResult: UserTestResult) {
         val sharedPreferences = getSharedPreferences("test_results", MODE_PRIVATE)
         val editor = sharedPreferences.edit()

@@ -15,11 +15,10 @@ class TestsActivity : AppCompatActivity() {
     private val testAdapter: TestAdapter by lazy {
         TestAdapter { test ->
             val intent = Intent(this, TestActivity::class.java)
-            intent.putExtra("testId", test.id) // передаем testId вместо testName
+            intent.putExtra("testId", test.id)
             startActivity(intent)
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestsBinding.inflate(layoutInflater)
@@ -29,8 +28,6 @@ class TestsActivity : AppCompatActivity() {
         if (category != null) {
             title = category.name
             initRecyclerView(category)
-        } else {
-            // Обработать ситуацию, когда категория не найдена, например, показать сообщение об ошибке или вернуться к предыдущей активности
         }
         binding.backToMainButton.setOnClickListener {
             finish()
@@ -42,9 +39,7 @@ class TestsActivity : AppCompatActivity() {
         binding.testsRecyclerView.layoutManager = gridLayoutManager
         binding.testsRecyclerView.adapter = testAdapter
 
-        // Фильтруем тесты по категории и обновляем адаптер
-        val filteredTests = Repository.getTests().filter { it.categoryId == category.id }
-        Log.d("TestsActivity", "Filtered tests: $filteredTests") // Добавьте логирование для отладки
+        val filteredTests = Repository.getTests(this).filter { it.categoryId == category.id }
         testAdapter.submitList(filteredTests)
     }
 }
