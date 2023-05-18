@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "question": "Вероятность невозможного события равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 1,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 2,
+    "question": "Вероятность достоверного события равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 1,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 3,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 1,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 4,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 2,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 5,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 2,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 6,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 2,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 7,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 2,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 8,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 3,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 9,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 3,
+    "isAnsweredCorrectly": false
+  },
+  {
+    "id": 10,
+    "question": "Сумма вероятностей всех элементарных исходов равна...",
+    "options": ["0", "1", "0.5", "не определена"],
+    "correctAnswerIndex": 0,
+    "categoryId": 3,
+    "isAnsweredCorrectly": false
+  }
+]

@@ -15,7 +15,7 @@ class CategoryProgressAdapter :
 
     class CategoryProgressDiffCallback : DiffUtil.ItemCallback<CategoryProgress>() {
         override fun areItemsTheSame(oldItem: CategoryProgress, newItem: CategoryProgress): Boolean {
-            return oldItem.categoryName == newItem.categoryName
+            return oldItem.categoryName == newItem.categoryName && oldItem.percentage == newItem.percentage
         }
 
         override fun areContentsTheSame(oldItem: CategoryProgress, newItem: CategoryProgress): Boolean {

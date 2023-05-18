@@ -19,7 +19,7 @@ class TestAdapter(private val onTestClickListener: (Test) -> Unit) :
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val test = getItem(position)
         holder.binding.testTitleTextView.text = test.testName
-        holder.binding.testQuestionsCountTextView.text = "Вопросов: ${test.questions.size}"
+        holder.binding.testQuestionsCountTextView.text = "Вопросов: ${test.questionIds?.size ?: 0}"
         holder.itemView.setOnClickListener { onTestClickListener(test) }
     }
 

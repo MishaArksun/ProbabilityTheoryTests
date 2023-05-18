@@ -9,6 +9,7 @@ import com.example.probabilitytheorytests.databinding.ActivityTestBinding
 import org.threeten.bp.LocalDateTime
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.probabilitytheorytests.data.Question
 import com.example.probabilitytheorytests.data.Test
 import com.example.probabilitytheorytests.data.UserTestResult
 import com.google.gson.Gson
@@ -19,6 +20,7 @@ class TestActivity : AppCompatActivity() {
     private val questionAdapter = QuestionAdapter()
     private var test: Test? = null
     private var testId: Int = -1
+    private var questions: List<Question> = listOf()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,23 +40,35 @@ class TestActivity : AppCompatActivity() {
         }
 
         testId = intent.getIntExtra("testId", -1)
-        test = Repository.getTests(this).find { it.id == testId }
+        if (testId != -1) {
+            test = Repository.getTestById(testId)
+            questions = Repository.getQuestionsByTest(testId)
+        }
 
-        if (test != null) {
-            questionAdapter.submitList(test!!.questions)
+        if (questions.isEmpty()) {
+            val questionsParcelableArrayList: ArrayList<Question>? = intent.getParcelableArrayListExtra("questions")
+            questions = questionsParcelableArrayList?.toList() ?: listOf()
+        }
+
+        if (questions.isNotEmpty()) {
+            questionAdapter.submitList(questions)
         } else {
             Toast.makeText(this, "Тест не найден", Toast.LENGTH_LONG).show()
         }
+
     }
+
     private fun initRecyclerView() {
         binding.questionsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.questionsRecyclerView.adapter = questionAdapter
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateResult(): UserTestResult {
         val correctAnswers = questionAdapter.currentList.count { it.isAnswerCorrect }
         return UserTestResult(testId, test?.testName ?: "", LocalDateTime.now(), correctAnswers, questionAdapter.itemCount)
     }
+
     private fun saveTestResult(testResult: UserTestResult) {
         val sharedPreferences = getSharedPreferences("test_results", MODE_PRIVATE)
         val editor = sharedPreferences.edit()

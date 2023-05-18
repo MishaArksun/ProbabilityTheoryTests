@@ -7,5 +7,5 @@ data class Test(
     val id: Int,
     val testName: String,
     val categoryId: Int,
-    val questions: List<Question>
+    val questionIds: List<Int> // храним только ID вопросов
 ): Parcelable

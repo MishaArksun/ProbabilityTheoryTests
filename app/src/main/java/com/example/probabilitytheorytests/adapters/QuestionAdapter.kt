@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.probabilitytheorytests.Repository
 import com.example.probabilitytheorytests.data.Question
 import com.example.probabilitytheorytests.databinding.QuestionItemBinding
 
@@ -35,11 +36,10 @@ class QuestionAdapter : ListAdapter<Question, QuestionAdapter.QuestionViewHolder
             binding.optionsRadioGroup.clearCheck()
 
             // Устанавливаем выбранный пользователем ответ, если он есть
-            if (question.userAnswerIndex != null) {
+            if (question.userAnswerIndex != null && question.userAnswerIndex != -1) {
                 binding.optionsRadioGroup.check(binding.optionsRadioGroup.getChildAt(question.userAnswerIndex!!).id)
             }
 
-            // Обработка выбора ответа пользователя
             binding.optionsRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 val selectedOptionIndex = when (checkedId) {
                     binding.option1RadioButton.id -> 0
@@ -49,13 +49,22 @@ class QuestionAdapter : ListAdapter<Question, QuestionAdapter.QuestionViewHolder
                     else -> null
                 }
                 question.userAnswerIndex = selectedOptionIndex
+
+                // Обновление статуса ответа
+                if (selectedOptionIndex == question.correctAnswerIndex) {
+                    // Ответ верный
+                    Repository.updateQuestionStatus(question.id, true, selectedOptionIndex ?: -1)
+                } else {
+                    // Ответ неверный
+                    Repository.updateQuestionStatus(question.id, false, selectedOptionIndex ?: -1)
+                }
             }
         }
     }
 
     class QuestionDiffCallback : DiffUtil.ItemCallback<Question>() {
         override fun areItemsTheSame(oldItem: Question, newItem: Question): Boolean {
-            return oldItem === newItem
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Question, newItem: Question): Boolean {
